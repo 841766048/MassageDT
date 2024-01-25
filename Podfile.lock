@@ -1,0 +1,149 @@
+PODS:
+  - Alamofire (5.8.1)
+  - AutoInch (2.4.1)
+  - CL_ShanYanSDK (2.3.6.5)
+  - ExytePopupView (2.8.3)
+  - HandyJSON (5.0.2)
+  - IQKeyboardManagerSwift (6.5.16)
+  - JFPopup (1.5.4):
+    - JRBaseKit (~> 1.1.1)
+  - JRBaseKit (1.1.2)
+  - LookinServer (1.2.4):
+    - LookinServer/Core (= 1.2.4)
+  - LookinServer/Core (1.2.4)
+  - Masonry (1.1.0)
+  - ProgressHUD (14.1.0)
+  - SDWebImage (5.18.5):
+    - SDWebImage/Core (= 5.18.5)
+  - SDWebImage/Core (5.18.5)
+  - SDWebImageSwiftUI (2.2.4):
+    - SDWebImage (~> 5.10)
+  - SJBaseVideoPlayer (3.7.6):
+    - Masonry
+    - SJBaseVideoPlayer/AVPlayer (= 3.7.6)
+    - SJBaseVideoPlayer/Common (= 3.7.6)
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJBaseVideoPlayer/AVPlayer (3.7.6):
+    - Masonry
+    - SJBaseVideoPlayer/Common
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJBaseVideoPlayer/Common (3.7.6):
+    - Masonry
+    - SJBaseVideoPlayer/ResourceLoader
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJBaseVideoPlayer/ResourceLoader (3.7.6):
+    - Masonry
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJUIKit/AttributesFactory (0.0.0.59):
+    - SJUIKit/AttributesFactory/Deprecated (= 0.0.0.59)
+    - SJUIKit/AttributesFactory/UIKitText (= 0.0.0.59)
+  - SJUIKit/AttributesFactory/Deprecated (0.0.0.59)
+  - SJUIKit/AttributesFactory/UIKitText (0.0.0.59)
+  - SJUIKit/ObserverHelper (0.0.0.59)
+  - SJUIKit/Queues (0.0.0.59)
+  - SJUIKit/SQLite3 (0.0.0.59):
+    - SJUIKit/SQLite3/Core (= 0.0.0.59)
+    - SJUIKit/SQLite3/Protocol (= 0.0.0.59)
+    - YYModel
+  - SJUIKit/SQLite3/Core (0.0.0.59):
+    - SJUIKit/SQLite3/Protocol
+    - YYModel
+  - SJUIKit/SQLite3/Protocol (0.0.0.59):
+    - YYModel
+  - SJVideoPlayer (3.4.3):
+    - SJBaseVideoPlayer (>= 3.7.5)
+    - SJVideoPlayer/Common (= 3.4.3)
+    - SJVideoPlayer/ControlLayers (= 3.4.3)
+    - SJVideoPlayer/ResourceLoader (= 3.4.3)
+  - SJVideoPlayer/Common (3.4.3):
+    - Masonry
+    - SJBaseVideoPlayer (>= 3.7.5)
+    - SJUIKit/AttributesFactory
+    - SJVideoPlayer/ResourceLoader
+  - SJVideoPlayer/ControlLayers (3.4.3):
+    - SJBaseVideoPlayer (>= 3.7.5)
+    - SJVideoPlayer/Common
+  - SJVideoPlayer/ResourceLoader (3.4.3):
+    - SJBaseVideoPlayer (>= 3.7.5)
+  - SnapKit (5.6.0)
+  - UIColor_Hex_Swift (5.1.9)
+  - YYModel (1.0.4)
+  - YYText (1.0.7)
+
+DEPENDENCIES:
+  - Alamofire
+  - AutoInch
+  - CL_ShanYanSDK
+  - ExytePopupView
+  - HandyJSON
+  - IQKeyboardManagerSwift
+  - JFPopup (= 1.5.4)
+  - LookinServer
+  - ProgressHUD
+  - SDWebImage
+  - SDWebImageSwiftUI
+  - SJVideoPlayer
+  - SnapKit
+  - UIColor_Hex_Swift
+  - YYText
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - AutoInch
+    - CL_ShanYanSDK
+    - ExytePopupView
+    - HandyJSON
+    - IQKeyboardManagerSwift
+    - JFPopup
+    - JRBaseKit
+    - LookinServer
+    - Masonry
+    - ProgressHUD
+    - SDWebImage
+    - SDWebImageSwiftUI
+    - SJBaseVideoPlayer
+    - SJUIKit
+    - SJVideoPlayer
+    - SnapKit
+    - UIColor_Hex_Swift
+    - YYModel
+    - YYText
+
+SPEC CHECKSUMS:
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  AutoInch: 4d69de92c4c54b71352d67d07dcb6d9e5d1e546a
+  CL_ShanYanSDK: e33ae72e33ee2131cda4ec24305e30c45a57ce48
+  ExytePopupView: f71a9ede978b4e80fc477553aebac4777819f49a
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
+  JFPopup: c3ada13bbda3cfe85bd71228e20a0b622eab72af
+  JRBaseKit: 825cca458a73990f6019deaaaaff75840dea477f
+  LookinServer: 00c7588043ed8e7ab64ce55b9fb747e51371ad06
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  ProgressHUD: c4a55f108815c46a6bf082407d2f806840b7a869
+  SDWebImage: 7ac2b7ddc5e8484c79aa90fc4e30b149d6a2c88f
+  SDWebImageSwiftUI: a3ed505b65903252560fcf37ff493d9d97648ae5
+  SJBaseVideoPlayer: f15debaa8c1e27b63bdefc8caeec515e9c71d079
+  SJUIKit: a40111941e408cc17d4c1c23495aa92999e814b0
+  SJVideoPlayer: 4f09814f58522e0975cb2dccfda925f6c8643467
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  UIColor_Hex_Swift: 20cb4e8d51b63e168a9da6933bc5d39cd8fb4ab5
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
+
+PODFILE CHECKSUM: a74ad1c3e4f6c01d41e7ba595db0988881e7f181
+
+COCOAPODS: 1.13.0
