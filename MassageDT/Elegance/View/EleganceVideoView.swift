@@ -7,20 +7,24 @@
 
 import SwiftUI
 import ExytePopupView
+import SDWebImageSwiftUI  
+import ProgressHUD
 
 /// 视频Item
 struct EleganceVideoView: View {
-    var videoClickBlock: ((EleganceModel) -> Void)?
-    init(videoClickBlock: ( (EleganceModel) -> Void)? = nil) {
+    @Binding var videos: [ElegantModel]
+    var videoClickBlock: ((ElegantModel) -> Void)?
+    init(videos: Binding<[ElegantModel]>, videoClickBlock: ( (ElegantModel) -> Void)? = nil) {
+        _videos = videos
         self.videoClickBlock = videoClickBlock
     }
     var body: some View {
         ScrollView(.vertical) {
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 2), content: {
-                ForEach(0...30, id: \.self) { index in
-                    EleganceVideoItemView()
+                ForEach(videos.indices, id: \.self) { index in
+                    EleganceVideoItemView(item: videos[index])
                         .onTapGesture {
-                            videoClickBlock?(EleganceModel())
+                            videoClickBlock?(videos[index])
                         }
                 }
             })
@@ -31,16 +35,17 @@ struct EleganceVideoView: View {
 
 struct EleganceVideoItemView: View {
     @State var isMore = false
+    let item: ElegantModel
     var body: some View {
         VStack(spacing: 0, content: {
-            Image("01")
+            WebImage(url: URL(string: item.userAvatar))
                 .resizable()
                 .frame(height: 180)
                 .clipped()
                 .padding(.bottom, 5)
             
             HStack(spacing: 0, content: {
-                Image("01")
+                WebImage(url: URL(string: item.userAvatar))
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 40, height: 40)
@@ -49,7 +54,7 @@ struct EleganceVideoItemView: View {
                     .padding(.trailing, 5)
                 VStack {
                     HStack(content: {
-                        Text("Placeholder")
+                        Text(item.nickname)
                             .font(.system(size: 14))
                             .foregroundStyle(Color("#1E1E1E"))
                         Spacer()
@@ -62,7 +67,7 @@ struct EleganceVideoItemView: View {
                     })
                     
                     HStack(spacing: 5, content: {
-                        Text("声音甜美")
+                        Text(item.userTags.joined(separator: " "))
                             .lineLimit(1)
                             .font(.system(size: 13))
                             .foregroundStyle(Color("#4E96EB"))
@@ -77,9 +82,26 @@ struct EleganceVideoItemView: View {
         .padding(.bottom, 15)
         .popup(isPresented: $isMore) {
             MoreView(isMore: $isMore) { value in
-                print("拉黑原因:\(value)")
+                NetWork.blackRequest(msg: value) { val in
+                    if val {
+                        var set = Set(SystemCaching.blackList)
+                        set.insert(item.id)
+                        SystemCaching.blackList = Array(set)
+                        ProgressHUD.succeed("拉黑成功")
+                        
+                        var followset = Set(SystemCaching.followList)
+                        followset.remove(item.id)
+                        SystemCaching.followList = Array(followset)
+                        
+                        RootViewToggle.default.updateEleganceData()
+                    }
+                }
             } reportBlock: { value in
-                print("举报原因:\(value)")
+                NetWork.blackRequest(msg: value) { val in
+                    if val {
+                        ProgressHUD.succeed("举报成功")
+                    }
+                }
             }
         } customize: {
             $0
@@ -91,5 +113,5 @@ struct EleganceVideoItemView: View {
 }
 
 #Preview {
-    EleganceVideoView()
+    EleganceVideoView(videos: .constant([]))
 }

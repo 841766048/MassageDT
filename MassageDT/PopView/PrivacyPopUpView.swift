@@ -16,7 +16,7 @@ import Network
 class PrivacyPopUpView: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "XX隐私与政策"
+        label.text = "欢迎使用"
         label.textColor = UIColor("#1E1E1E")
         label.font = .systemFont(ofSize: 16)
         return label
@@ -24,10 +24,11 @@ class PrivacyPopUpView: UIView {
     
     lazy var contentLabel: YYLabel = {
         let label = YYLabel()
+        label.textAlignment = .center
         label.preferredMaxLayoutWidth = screenWidth - 38.auto()*2
         label.textColor = UIColor("#3C3C3C")
         label.font = .systemFont(ofSize: 15)
-        let textStr = "尊敬的用户，欢迎使用“xx按摩App”：在您使用前请仔细阅读《用户协议》和《隐私政策》，xx将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击同意也就意味着您自觉遵守《用户协议》和《隐私政策》。"
+        let textStr = "请您充分阅读《用户协议》和《隐私政策》，我们非常注重您的隐私和个人信息保护。在您使用的过程中，我们会对您的部分个人信息进行收集和使用。未经您同意，我们不会出售和共享您的信息。您可以查询，更正，删除您的个人信息，我们提供了注销账号和拉黑举报功能。"
         var searchRange = NSRange(location: 0, length: textStr.utf16.count)
 
         
@@ -59,15 +60,23 @@ class PrivacyPopUpView: UIView {
         let attriStr = NSMutableAttributedString(string: textStr)
         attriStr.yy_color = UIColor("#3C3C3C")
         attriStr.yy_font = .systemFont(ofSize: 15)
-        
+        attriStr.yy_alignment = .center
        
         let highlight_agreement = YYTextHighlight()
         highlight_agreement.tapAction = { _, _, _, _ in
             debugPrint("用户协议")
+            let vc = ProtocolPolicyVC()
+            vc.title = "用户协议"
+            vc.urlStr = "https://dtpubs.51quanmo.cn/AB/User.Agreement.html"
+            topViewController()?.navigationController?.pushViewController(vc, animated: true)
         }
         let highlight_policy = YYTextHighlight()
         highlight_policy.tapAction = { _, _, _, _ in
             debugPrint("隐私政策")
+            let vc = ProtocolPolicyVC()
+            vc.title = "隐私政策"
+            vc.urlStr =  "https://dtpubs.51quanmo.cn/AB/Privacy.Policy.html"
+            topViewController()?.navigationController?.pushViewController(vc, animated: true)
         }
         attriStr.yy_lineSpacing = 10
         for range in agreement_ranges {
@@ -169,7 +178,7 @@ class PrivacyPopUpView: UIView {
 }
 
 
-class FirstInstallVC: UIViewController {
+class FirstInstallVC: BaseViewController {
     
     lazy var bgImageView: UIImageView = {
         let img = UIImageView()
@@ -179,17 +188,11 @@ class FirstInstallVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initWithUI()
-        // 使用示例
-        checkNetworkPermission { hasPermission in
-            if hasPermission {
-                debugPrint("有网络权限")
-               
-            } else {
-                debugPrint("网络权限被限制")
-            }
-        }
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     func initWithUI() {
         self.view.addSubview(self.bgImageView)
         bgImageView.snp.makeConstraints { make in
@@ -203,22 +206,5 @@ class FirstInstallVC: UIViewController {
             make.centerY.equalToSuperview()
         }
 
-    }
-    
-    func checkNetworkPermission(completion: @escaping (Bool) -> Void) {
-        let monitor = NWPathMonitor()
-
-            monitor.pathUpdateHandler = { path in
-                if path.status == .satisfied {
-                    // 有网络连接
-                    completion(true)
-                } else {
-                    // 无网络连接
-                    completion(false)
-                }
-            }
-
-            let queue = DispatchQueue(label: "NetworkMonitor")
-            monitor.start(queue: queue)
     }
 }

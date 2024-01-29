@@ -16,39 +16,42 @@ class EleganceVC: BaseViewController {
             self.navigationController?.pushViewController(FollowVC(), animated: true)
         }
         viewModel.voiceClickBlock = { model in
-            self.navigationController?.pushViewController(UserDetailsVC(), animated: true)
+            self.navigationController?.pushViewController(UserDetailsVC(iteModel: model), animated: true)
         }
         viewModel.videoClickBlock = { model in
-            self.navigationController?.pushViewController(VideoViewVC(), animated: true)
+            self.navigationController?.pushViewController(VideoViewVC(itemModel: model), animated: true)
         }
         return viewModel
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "风采"
+        RootViewToggle.default.$updateElegance
+            .dropFirst()
+            .sink {[weak self] _ in
+                self?.getDataSource()
+            }
+            .store(in: &disposeBag)
     }
     override func initializeUIInfo() {
         super.initializeUIInfo()
         let eleganceView = UIHostingController(rootView: EleganceView(viewModel: viewModel)).view!
         eleganceView.frame = CGRect(x: 0, y: totalNavBarHeight, width: screenWidth, height: screenHeight - totalNavBarHeight - bottomSafeMargin  - 49)
         self.view.addSubview(eleganceView)
-        // 延迟执行
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.viewModel.isLocate = true
-            
-            KeyWindowPopView.showPop {
-                debugPrint("点击了OK")
+        self.viewModel.isLocate = LocationManager.shared.hasLocationAuthorization()
+        getDataSource()
+    }
+    
+    func getDataSource() {
+        NetWork.getEleganceData {[weak self] response in
+            self?.viewModel.audio = response.audio
+            self?.viewModel.video = response.video
+            if SystemCaching.full.count > 0 {
+                KeyWindowPopView.showPop {
+                    BaseTabBarControllerView.tab.selectedIndex = 1
+                }
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

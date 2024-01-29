@@ -7,26 +7,20 @@
 
 import SwiftUI
 
-struct EleganceModel: Identifiable {
-    let id = UUID().uuidString
-    var iconImage: String = ""
-    var name: String = ""
-    var feature: [String] = []
-    var address: String = ""
-    // 语音秒数
-    var voiceSeconds: String = ""
-}
-
 class EleganceViewModel: ObservableObject {
     @Published var isLocate = false
     /// 更多点击
-    var moreClickBlock: ((EleganceModel) -> Void)?
+    var moreClickBlock: ((ElegantModel) -> Void)?
     /// 语音点击
-    var voiceClickBlock: ((EleganceModel) -> Void)?
+    var voiceClickBlock: ((ElegantModel) -> Void)?
     /// 视频点击
-    var videoClickBlock: ((EleganceModel) -> Void)?
+    var videoClickBlock: ((ElegantModel) -> Void)?
     /// 我的关注
     var followClickBlock: (() -> Void)?
+    // 音频
+    @Published var audio: [ElegantModel] = []
+    // 视频
+    @Published var video: [ElegantModel] = []
 }
 
 
@@ -35,7 +29,6 @@ struct EleganceView: View {
     @State private var selectedIndex: Int = 0
     
     @State var isLocate = false
-    @State var dataSource: [EleganceModel] = []
     @ObservedObject var viewModel: EleganceViewModel
     init(viewModel: EleganceViewModel) {
         self.viewModel = viewModel
@@ -51,11 +44,11 @@ struct EleganceView: View {
             })
             TabView(selection: $selectedIndex,
                     content:  {
-                VoiceListView(dataSource: $dataSource, voiceClickBlock: { model in
+                VoiceListView(dataSource: $viewModel.audio, voiceClickBlock: { model in
                     viewModel.voiceClickBlock?(model)
                 })
                     .tag(0)
-                EleganceVideoView(videoClickBlock: { model in
+                EleganceVideoView(videos: $viewModel.video, videoClickBlock: { model in
                     viewModel.videoClickBlock?(model)
                 }).tag(1)
             })
@@ -66,28 +59,6 @@ struct EleganceView: View {
                 UITabBar.appearance().isHidden = true
             })
         }
-        .onAppear(perform: {
-            // 延迟执行
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                dataSource = [
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                    EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15")
-                ]
-            }
-        })
         .padding(.top, 12)
         .background {
             Color("#FAFAFA")

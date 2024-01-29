@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 import SJVideoPlayer
 
 class VideoViewVC: BaseViewController {
@@ -49,7 +50,7 @@ class VideoViewVC: BaseViewController {
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "丽娜"
+        label.text = self.itemModel.nickname
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = UIColor("#1E1E1E")
         return label
@@ -57,7 +58,7 @@ class VideoViewVC: BaseViewController {
     
     lazy var typeLabel: UILabel = {
         let label = UILabel()
-        label.text = "声音甜美    温柔"
+        label.text = self.itemModel.userTags.joined(separator: "  ")
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = UIColor("#4E96EB")
         return label
@@ -67,14 +68,24 @@ class VideoViewVC: BaseViewController {
         let imageV = UIImageView(image: UIImage(named: "right_icon"))
         return imageV
     }()
+    let itemModel: ElegantModel
+    init(itemModel: ElegantModel) {
+        self.itemModel = itemModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "风采"
-        if let url = URL(string: "https://crazynote.v.netease.com/2019/0811/6bc0a084ee8655bfb2fa31757a0570f4qt.mp4") {
+        if let url = URL(string: self.itemModel.videoSrc) {
             let asset = SJVideoPlayerURLAsset.init(url: url)
             player.urlAsset = asset
         }
+        self.headeImageView.sd_setImage(with: URL(string: self.itemModel.userAvatar))
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -150,6 +161,6 @@ class VideoViewVC: BaseViewController {
     
     @objc func buttonClick() {
         print("跳转详情")
-        self.navigationController?.pushViewController(UserDetailsVC(), animated: true)
+        self.navigationController?.pushViewController(UserDetailsVC(iteModel: self.itemModel), animated: true)
     }
 }

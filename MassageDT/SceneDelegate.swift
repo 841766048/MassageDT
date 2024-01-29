@@ -7,14 +7,19 @@
 
 import UIKit
 import Combine
+import StoreKit
 import CoreTelephony
 
 class RootViewToggle {
     static let `default` = RootViewToggle()
     @Published var switchRootView: Int = 0
-    
+    @Published var updateElegance: Int = 0
     func replaceRootView() {
         self.switchRootView = Int(arc4random_uniform(100))
+    }
+    
+    func updateEleganceData() {
+        self.updateElegance = Int(arc4random_uniform(100))
     }
 }
 
@@ -28,14 +33,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        window?.backgroundColor = .white
         RootViewToggle.default.$switchRootView
+            .dropFirst()
             .sink {[weak self] _ in
                 self?.switchRootView()
             }
             .store(in: &disposeBag)
         
         if SystemCaching.isFirstInstall {
-            window?.rootViewController = FirstInstallVC()
+            window?.rootViewController = BaseNavigationController(rootViewController: FirstInstallVC())
             window?.makeKeyAndVisible()
         } else {
             switchRootView()
@@ -44,13 +51,55 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func switchRootView() {
-//        if SystemCaching.isLogin {
-//            window?.rootViewController = BaseNavigationController(rootViewController: LoginVC())
-//        } else {
-//            window?.rootViewController = BaseNavigationController(rootViewController: LoginVC())
-//        }
-        window?.rootViewController = BaseTabBarControllerView()
-        window?.makeKeyAndVisible()
+        if !SystemCaching.isLogin {
+            let vc = UIViewController()
+            vc.view.backgroundColor = .white
+            window?.rootViewController = vc
+            window?.makeKeyAndVisible()
+            NetWork.retrievePermissionInfo { model in
+                SystemCaching.kefu = model?.kefu ?? ""
+                if model?.prelogin == "1" {
+                    DispatchQueue.main.async {
+                        self.window?.rootViewController = LoginVC()
+                        self.window?.makeKeyAndVisible()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        BaseTabBarControllerView.tab = BaseTabBarControllerView()
+                        BaseTabBarControllerView.tab.tabBar.isHidden = false
+                        self.window?.rootViewController = BaseTabBarControllerView.tab
+                        self.window?.makeKeyAndVisible()
+                    }
+                   
+                }
+            }
+        } else {
+            BaseTabBarControllerView.tab = BaseTabBarControllerView()
+            let vc = UIViewController()
+            vc.view.backgroundColor = .white
+            window?.rootViewController = vc
+            window?.makeKeyAndVisible()
+            NetWork.retrievePermissionInfo { model in
+                SystemCaching.kefu = model?.kefu ?? ""
+                SystemCaching.find_url = model?.find_url ?? ""
+                BaseTabBarControllerView.tab.tabBar.isHidden = false
+                if model?.tab == 1 {
+                    BaseTabBarControllerView.tab.selectedIndex = 1
+                }
+                let rank = model?.rank == 1
+                DispatchQueue.main.async {
+                    self.window?.rootViewController = BaseTabBarControllerView.tab
+                    self.window?.makeKeyAndVisible()
+                }
+                if rank {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        if let windowScene = self.window?.windowScene {
+                            SKStoreReviewController.requestReview(in: windowScene)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

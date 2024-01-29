@@ -84,7 +84,7 @@ class KeyWindowPopView: UIView {
         
         let backgroundBtn = UIButton()
         backgroundBtn.backgroundColor = UIColor.clear
-        backgroundBtn.addTarget(self, action: #selector(dismissAnimated), for: .touchUpInside)
+//        backgroundBtn.addTarget(self, action: #selector(dismissAnimated), for: .touchUpInside)
         background.addSubview(backgroundBtn)
         backgroundBtn.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -122,6 +122,7 @@ class KeyWindowPopView: UIView {
     }
     
     @objc func okClick() {
+        self.dismissAnimated()
         self.okBlock?()
     }
 }

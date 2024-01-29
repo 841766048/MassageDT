@@ -26,8 +26,13 @@ struct LogOutView: View {
             
             HStack(spacing: 25) {
                 Button {
-                    print("注销")
                     isLogOff = false
+                    NetWork.logOut { val in
+                        if val {
+                            SystemCaching.clearLogin()
+                            RootViewToggle.default.replaceRootView()
+                        }
+                    }
                 } label: {
                     Text("确定")
                         .padding(.horizontal, 48)

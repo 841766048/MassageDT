@@ -78,6 +78,7 @@ PODS:
   - SJVideoPlayer/ResourceLoader (3.4.3):
     - SJBaseVideoPlayer (>= 3.7.5)
   - SnapKit (5.6.0)
+  - SwiftSoup (2.6.1)
   - UIColor_Hex_Swift (5.1.9)
   - YYModel (1.0.4)
   - YYText (1.0.7)
@@ -96,6 +97,7 @@ DEPENDENCIES:
   - SDWebImageSwiftUI
   - SJVideoPlayer
   - SnapKit
+  - SwiftSoup
   - UIColor_Hex_Swift
   - YYText
 
@@ -118,6 +120,7 @@ SPEC REPOS:
     - SJUIKit
     - SJVideoPlayer
     - SnapKit
+    - SwiftSoup
     - UIColor_Hex_Swift
     - YYModel
     - YYText
@@ -140,10 +143,11 @@ SPEC CHECKSUMS:
   SJUIKit: a40111941e408cc17d4c1c23495aa92999e814b0
   SJVideoPlayer: 4f09814f58522e0975cb2dccfda925f6c8643467
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftSoup: 5dd2c1b06afc964f30d99894af6ede22ede627aa
   UIColor_Hex_Swift: 20cb4e8d51b63e168a9da6933bc5d39cd8fb4ab5
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a74ad1c3e4f6c01d41e7ba595db0988881e7f181
+PODFILE CHECKSUM: 5dcd64d1a993737f62ad1bb5321263fe0e35fec4
 
 COCOAPODS: 1.13.0

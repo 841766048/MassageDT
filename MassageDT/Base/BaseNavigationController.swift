@@ -8,6 +8,7 @@
 import UIKit
 
 class BaseNavigationController: UINavigationController {
+    var isLogin = false
     lazy var backButton: UIButton = {
         let back = UIButton()
         back.frame.size = CGSize(width: 22, height: 22)
@@ -45,9 +46,11 @@ class BaseNavigationController: UINavigationController {
         
         if viewControllers.count > 0 {
             viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.backButton)
-            // 隐藏 tabbar
             viewController.hidesBottomBarWhenPushed = true
+        } else {
+            viewController.hidesBottomBarWhenPushed = false
         }
+        UIView.setAnimationsEnabled(true)
         super.pushViewController(viewController, animated: animated)
     }
     

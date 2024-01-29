@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FollowView: View {
-    @State var dataSource: [EleganceModel] = []
+    @State var dataSource: [ElegantModel] = []
     var body: some View {
         VStack {
             if dataSource.count == 0 {
@@ -29,29 +29,9 @@ struct FollowView: View {
         }
         .background(content: {
             Color.clear
-        })
-            .onAppear {
-                // 延迟执行
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    dataSource = [
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"),
-                        EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15")
-                    ]
-                }
-            }
+        }).onAppear {
+            self.dataSource = UserFollowBlacklist.default.followList
+        }
     }
 }
 

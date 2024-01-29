@@ -15,15 +15,25 @@ class UserDetailsVC: BaseViewController {
             self.navigationController?.pushViewController(FollowVC(), animated: true)
         }
         viewM.albumListClick = {
-            self.navigationController?.pushViewController(UserAlbumListVC(), animated: true)
+            self.navigationController?.pushViewController(UserAlbumListVC(iteModel: self.iteModel), animated: true)
         }
         return viewM
     }()
+    let iteModel: ElegantModel
+    init(iteModel: ElegantModel) {
+        self.iteModel = iteModel
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.itemModel = iteModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "用户详情"
         self.view.backgroundColor = UIColor("#FAFAFA")
-        
         let view = UIHostingController(rootView: UserDetailsView(viewModel: viewModel)).view!
         view.frame = CGRect(x: 0, y: totalNavBarHeight, width: screenWidth, height: screenHeight - totalNavBarHeight - bottomSafeMargin)
         self.view.addSubview(view)

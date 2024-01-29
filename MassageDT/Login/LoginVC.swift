@@ -149,6 +149,7 @@ class LoginVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         phoneNumberOneClickLogin()
+        _ = LocationManager.shared.hasLocationAuthorization()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -251,13 +252,17 @@ class LoginVC: BaseViewController {
             ProgressHUD.failed("请填写手机号")
             return
         }
-        
-        
-        // 禁用按钮防止重复点击
-        codeButton.isEnabled = false
-        
-        // 启动定时器，每秒更新倒计时
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
+        NetWork.sendVerificationCode(self.phoneTextField.text!) {[weak self] response in
+            if response?.code == 200 {
+                // 禁用按钮防止重复点击
+                self?.codeButton.isEnabled = false
+                
+                if let sel = self {
+                    // 启动定时器，每秒更新倒计时
+                    sel.timer = Timer.scheduledTimer(timeInterval: 1, target: sel, selector: #selector(sel.updateCountdown), userInfo: nil, repeats: true)
+                }
+            }
+        }
     }
     
     // 更新倒计时
@@ -296,6 +301,29 @@ class LoginVC: BaseViewController {
             ProgressHUD.failed("请同意隐私协议")
             return
         }
+        NetWork.performCodeLogin(phone, code: number) { model in
+            SystemCaching.phone = self.hidePhoneNumber(phoneNumber: phone)
+            SystemCaching.key = model?.key ?? ""
+            SystemCaching.tab = model?.tab ?? ""
+            SystemCaching.kefu = model?.kefu ?? ""
+            SystemCaching.isLogin = true
+            RootViewToggle.default.replaceRootView()
+        }
+    }
+    func hidePhoneNumber(phoneNumber: String) -> String {
+        guard phoneNumber.count == 11 else {
+            // 如果手机号不是11位，不进行隐藏处理
+            return phoneNumber
+        }
+
+        let startIndex = phoneNumber.index(phoneNumber.startIndex, offsetBy: 3)
+        let endIndex = phoneNumber.index(phoneNumber.endIndex, offsetBy: -4)
+
+        // 使用字符串截取和替换方法来隐藏部分手机号
+        let hiddenPart = String(repeating: "*", count: phoneNumber.count - 7)
+        let hiddenPhoneNumber = phoneNumber.replacingCharacters(in: startIndex..<endIndex, with: hiddenPart)
+
+        return hiddenPhoneNumber
     }
 }
 
@@ -431,6 +459,16 @@ extension LoginVC: CLShanYanSDKManagerDelegate {
             }
         } oneKeyLoginListener: { result in
             debugPrint("result = \(result)")
+            if let token = result.data?["token"] as? String {
+                NetWork.performOneClickLogin(token) { model in
+                    SystemCaching.phone = AppPeriod.oneClickLoginPreFetchedPhoneNumber
+                    SystemCaching.key = model?.key ?? ""
+                    SystemCaching.tab = model?.tab ?? ""
+                    SystemCaching.kefu = model?.kefu ?? ""
+                    SystemCaching.isLogin = true
+                    RootViewToggle.default.replaceRootView()
+                }
+            }
         }
     }
     

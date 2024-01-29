@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import SwiftSoup
 import ExytePopupView
 
 struct SetView: View {
     @State var isNickName = false
+    @State var nickName: String = ""
     @State var iconImage: UIImage?
     @State var pickerManager: ImagePickerManager?
     @State var isLogOff = false
     @State var isLogOut = false
+    @State var logoutTip = "注销账号会删除所有数据， 确认注销吗？"
     var body: some View {
         VStack(spacing: 12) {
             VStack(spacing: 0) {
@@ -32,7 +35,7 @@ struct SetView: View {
                                 .frame(width: 23, height: 23)
                                 .clipShape(Circle())
                         } else {
-                            Image("my_select")
+                            Image("默认头像")
                                 .resizable()
                                 .frame(width: 23, height: 23)
                                 .clipShape(Circle())
@@ -62,7 +65,7 @@ struct SetView: View {
                             .foregroundStyle(Color("#333333"))
                         Spacer()
                         
-                        Text("霹雳小子")
+                        Text(nickName)
                         Image("right_icon")
                             .resizable()
                             .frame(width: 5, height: 10)
@@ -79,7 +82,20 @@ struct SetView: View {
             
             VStack(spacing: 0) {
                 Button {
-                    isLogOff = true
+                    NetWork.performAccountLogoutText { tips in
+                        if tips.count > 0 {
+                            do {
+                               let doc: Document = try SwiftSoup.parse(tips)
+                                logoutTip = try doc.text()
+                                isLogOff = true
+                            } catch Exception.Error(let type, let message) {
+                                print(message)
+                            } catch {
+                                print("error")
+                            }
+                           
+                        }
+                    }
                 } label: {
                     HStack(spacing: 9) {
                         Text("注销账号")
@@ -133,12 +149,17 @@ struct SetView: View {
             Color("#FAFAFA")
         }
         .onAppear(perform: {
+            nickName = getNickName()
+            self.iconImage = AvatarManager.loadAvatar(forAccount: SystemCaching.phone)
             pickerManager = ImagePickerManager.showImageSelect { image in
-                self.iconImage = image
+                if let img = image {
+                    self.iconImage = image
+                    AvatarManager.saveAvatar(image: img, forAccount: SystemCaching.phone)
+                }
             }
         })
         .popup(isPresented: $isNickName) {
-           ChangeNicknameView(isNickName: $isNickName)
+            ChangeNicknameView(nickName: $nickName, isNickName: $isNickName)
         } customize: {
             $0
                 .isOpaque(true)
@@ -146,7 +167,7 @@ struct SetView: View {
                 .backgroundColor(.black.opacity(0.4))
         }
         .popup(isPresented: $isLogOff, view: {
-            LogOffView(isLogOff: $isLogOff, msg: "注销账号会删除所有数据， 确认注销吗？")
+            LogOffView(isLogOff: $isLogOff, msg: $logoutTip)
         }, customize: {
             $0.isOpaque(true)
             .closeOnTap(false)
@@ -160,6 +181,28 @@ struct SetView: View {
             .backgroundColor(.black.opacity(0.4))
         })
     }
+    
+    func getNickName() -> String {
+        var nickNames = SystemCaching.nickName
+        if nickNames.count > 0 {
+            for str in nickNames {
+                let to = "<0>"+SystemCaching.phone+"<0>"
+                if str.contains(to) {
+                    let resultString = str.replacingOccurrences(of: "<0>"+SystemCaching.phone+"<0>", with: "")
+                    return resultString
+                }
+            }
+            let nickName = "用户\(Int(arc4random_uniform(10000)))"
+            nickNames.append(nickName)
+            SystemCaching.nickName = nickNames
+            return nickName
+        } else {
+            let nickName = "用户\(Int(arc4random_uniform(10000)))"
+            nickNames.append(nickName)
+            SystemCaching.nickName = nickNames
+            return nickName
+        }
+    }
 }
 
 
@@ -170,7 +213,7 @@ struct SetView: View {
 
 
 struct ChangeNicknameView: View {
-    @State var nickName: String = ""
+    @Binding var nickName: String
     @Binding var isNickName: Bool
     var body: some View {
         VStack(spacing: 0) {
@@ -186,6 +229,15 @@ struct ChangeNicknameView: View {
              
             Button {
                 isNickName = false
+                if nickName.count > 0 {
+                    var nickNames = SystemCaching.nickName
+                    nickNames.removeAll { str in
+                        let to = "<0>"+SystemCaching.phone+"<0>"
+                        return str.contains(to)
+                    }
+                    nickNames.append("<0>"+SystemCaching.phone+"<0>"+nickName)
+                    SystemCaching.nickName = nickNames
+                }
             } label: {
                 Text("保存")
                     .padding(.horizontal, 98)

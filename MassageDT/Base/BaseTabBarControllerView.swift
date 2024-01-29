@@ -7,17 +7,24 @@
 
 import UIKit
 
-class BaseTabBarControllerView: UITabBarController {
-
+class BaseTabBarControllerView: UITabBarController, UITabBarControllerDelegate {
+    static var tab = BaseTabBarControllerView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
         initializeUIInfo()
         // Do any additional setup after loading the view.
     }
     func initializeUIInfo() {
         let nav_eleganceVC = setUpVC(title: "风采", norImage: "fengcai", selImage: "fengcai_select", vc: EleganceVC())
-        let nav_leisureVC = setUpVC(title: "休闲", norImage: "xiuxian", selImage: "xiuxian_select", vc: LeisureVC())
+        let feisureVC = LeisureVC()
+        if SystemCaching.isLogin {
+            feisureVC.loadURL()
+        }
+        let nav_leisureVC = setUpVC(title: "休闲", norImage: "xiuxian", selImage: "xiuxian_select", vc: feisureVC)
+        nav_leisureVC.isLogin = true
         let nav_mineVC = setUpVC(title: "我的", norImage: "my", selImage: "my_select", vc: MineVC())
+        nav_mineVC.isLogin = true
         
         self.viewControllers = [nav_eleganceVC, nav_leisureVC, nav_mineVC]
         self.tabBar.backgroundColor = UIColor("#FFFFFF")
@@ -43,5 +50,18 @@ class BaseTabBarControllerView: UITabBarController {
         nav.tabBarItem.selectedImage = UIImage(named: selImage)
         nav.tabBarItem.image = UIImage(named: norImage)
         return nav
+    }
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        print("viewController == \(viewController)")
+        if let nav = viewController as? BaseNavigationController {
+            if nav.isLogin && !SystemCaching.isLogin {
+                topViewController()?.navigationController?.pushViewController(LoginVC(), animated: true)
+                return false
+            }
+        }
+        return true
+    }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print("tabBarController == \(tabBarController.selectedIndex)")
     }
 }

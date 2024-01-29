@@ -10,8 +10,10 @@ import UIKit
 class MineVC: BaseViewController {
     lazy var headImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+        imageView.image = UIImage(named: "默认头像")
         imageView.layer.cornerRadius = 30
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     lazy var nickName: UILabel = {
@@ -53,7 +55,14 @@ class MineVC: BaseViewController {
         title = "我的"
         view.backgroundColor = UIColor("#FAFAFA")
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        nickName.text = getNickName()
+        if let img = AvatarManager.loadAvatar(forAccount: SystemCaching.phone) {
+            self.headImageView.image = img
+        }
+        
+    }
     override func initializeUIInfo() {
         super.initializeUIInfo()
         self.view.addSubview(self.tableView)
@@ -117,16 +126,19 @@ extension MineVC: UITableViewDelegate, UITableViewDataSource {
         case "官方客服":
             self.navigationController?.pushViewController(KeFuVC(), animated: true)
         case "操作帮助":
-            break
+            let vc = ProtocolPolicyVC()
+            vc.title = "操作帮助"
+            vc.urlStr = "https://dtpubs.51quanmo.cn/AB/Operation.Help.html"
+            self.navigationController?.pushViewController(vc, animated: true)
         case "用户协议":
             let vc = ProtocolPolicyVC()
             vc.title = "用户协议"
-            vc.urlStr = "https://bai.tongchengjianzhi.cn/ba/ab/yhxy.html"
+            vc.urlStr = "https://dtpubs.51quanmo.cn/AB/User.Agreement.html"
             self.navigationController?.pushViewController(vc, animated: true)
         case "隐私政策":
             let vc = ProtocolPolicyVC()
             vc.title = "隐私政策"
-            vc.urlStr =  "https://bai.tongchengjianzhi.cn/ba/ab/yszc.html"
+            vc.urlStr =  "https://dtpubs.51quanmo.cn/AB/Privacy.Policy.html"
             self.navigationController?.pushViewController(vc, animated: true)
         case "设置":
             navigationController?.pushViewController(SetVC(), animated: true)
@@ -134,6 +146,4 @@ extension MineVC: UITableViewDelegate, UITableViewDataSource {
             break
         }
     }
-    
-   
 }

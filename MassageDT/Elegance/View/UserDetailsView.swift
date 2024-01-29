@@ -6,24 +6,30 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 import ExytePopupView
+import ProgressHUD
 
 class UserDetailsViewModel: ObservableObject {
     var followListClick:(() -> ())?
     var albumListClick:(() -> ())?
+    @Published var itemModel: ElegantModel = ElegantModel()
+    
 }
 
 
 struct UserDetailsTopView: View {
-    let itemModel: EleganceModel
+    let itemModel: ElegantModel
     @State var isMore = false
     @State var isFollow = false
     @State var isCancelFollow = false
     
+    @State var userFollow = false
     let followListClick:(() -> ())?
+    @AppStorage("followList") var followList = SystemCaching.followList
     var body: some View {
         HStack {
-            Image(itemModel.iconImage)
+            WebImage(url: URL(string: itemModel.userAvatar))
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 80, height: 80)
@@ -31,24 +37,27 @@ struct UserDetailsTopView: View {
                 .cornerRadius(40)
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .top, spacing: 0, content: {
-                    Text(itemModel.name)
+                    Text(itemModel.nickname)
                         .font(.system(size: 16, weight: .medium))
                         .padding(.bottom, 14)
                         .padding(.trailing, 30)
                     
                     Button(action: {
-                        if SystemCaching.followList.contains("1") {
+                        if userFollow {
                             isCancelFollow = true
                         } else {
+                            var set = Set(SystemCaching.followList)
+                            set.insert(self.itemModel.id)
+                            SystemCaching.followList = Array(set)
+                            userFollow = true
                             isFollow = true
                         }
-                        
                     }, label: {
                         HStack(spacing: 7.5) {  
-                            Image(SystemCaching.followList.contains("1") ? "已关注":"add")
+                            Image(userFollow ? "已关注":"add")
                                 .resizable()
                                 .frame(width: 8,height: 8)
-                            Text(SystemCaching.followList.contains("1") ? "已关注":"关注")
+                            Text(userFollow ? "已关注":"关注")
                                 .font(.system(size: 11, weight: .medium))
                                 .foregroundColor(Color("#4E96EB"))
                         }
@@ -62,25 +71,32 @@ struct UserDetailsTopView: View {
                     
                     Spacer()
                     
-                    Text(itemModel.address)
+                    Text(itemModel.cityName)
                         .foregroundStyle(Color("#3C3C3C"))
                         .font(.system(size: 14))
                 })
                 HStack(spacing: 10) {
-                    ForEach(itemModel.feature.indices, id:\.self) { index in
-                        Text(itemModel.feature[index])
+                    ForEach(itemModel.userTags.indices, id:\.self) { index in
+                        Text(itemModel.userTags[index])
                             .font(.system(size: 14, weight: .regular))
                             .foregroundColor(Color("#4E96EB"))
                     }
                 }
                 .padding(.bottom, 14)
                 HStack {
-                    ZStack(alignment: .trailing) {
-                        Image("yuyin")
-                        Text(itemModel.voiceSeconds)
-                            .foregroundStyle(.white)
-                            .padding(.trailing, 20)
+                    Button {
+                        if let url = URL(string: itemModel.audioSrc) {
+                            AudioManager.shared.playAudio(from: url)
+                        }
+                    } label: {
+                        ZStack(alignment: .trailing) {
+                            Image("yuyin")
+                            Text("")
+                                .foregroundStyle(.white)
+                                .padding(.trailing, 20)
+                        }
                     }
+
                     Spacer()
                     Button(action: {
                         isMore = true
@@ -100,9 +116,26 @@ struct UserDetailsTopView: View {
         }
         .popup(isPresented: $isMore) {
             MoreView(isMore: $isMore) { value in
-                print("拉黑原因:\(value)")
+                NetWork.blackRequest(msg: value) { val in
+                    if val {
+                        var set = Set(SystemCaching.blackList)
+                        set.insert(itemModel.id)
+                        SystemCaching.blackList = Array(set)
+                        ProgressHUD.succeed("拉黑成功")
+                        
+                        var followset = Set(SystemCaching.followList)
+                        followset.remove(itemModel.id)
+                        SystemCaching.followList = Array(followset)
+                        
+                        RootViewToggle.default.updateEleganceData()
+                    }
+                }
             } reportBlock: { value in
-                print("举报原因:\(value)")
+                NetWork.blackRequest(msg: value) { val in
+                    if val {
+                        ProgressHUD.succeed("举报成功")
+                    }
+                }
             }
         } customize: {
             $0
@@ -112,9 +145,8 @@ struct UserDetailsTopView: View {
         }
         .popup(isPresented: $isFollow) {
             FollowTipsView(isShow:  $isFollow, message: "关注成功", firstTitle: "好的", firstClick: {
-                
-            } , lastTitle: "关注成功") {
-                
+            } , lastTitle: "关注列表") {
+                followListClick?()
             }
         } customize: {
             $0
@@ -124,7 +156,10 @@ struct UserDetailsTopView: View {
         }
         .popup(isPresented: $isCancelFollow) {
             FollowTipsView(isShow:  $isCancelFollow, message: "确认取消关注吗？", firstTitle: "确认", firstClick: {
-                
+                var set = Set(SystemCaching.followList)
+                set.remove(self.itemModel.id)
+                SystemCaching.followList = Array(set)
+                userFollow = false
             } , lastTitle: "关闭") {
                 
             }
@@ -134,6 +169,9 @@ struct UserDetailsTopView: View {
                 .closeOnTap(false)
                 .backgroundColor(.black.opacity(0.4))
         }
+        .onAppear {
+            userFollow = SystemCaching.followList.contains("\(self.itemModel.id)")
+        }
 
     }
 }
@@ -141,12 +179,14 @@ struct UserDetailsTopView: View {
 
 struct UserDetailsView: View {
     @ObservedObject var viewModel: UserDetailsViewModel
+    @State var clickURLAvatar: String = ""
+    @State var isImageShow = false
     var body: some View {
         ScrollView {
-            UserDetailsTopView(itemModel: EleganceModel(iconImage: "01", name: "丽娜", feature: ["声音甜美", "声音甜美"], address: "上海", voiceSeconds: "15"), followListClick: {
+            UserDetailsTopView(itemModel: viewModel.itemModel, followListClick: {
                 viewModel.followListClick?()
             })
-            Image("jjp")
+            WebImage(url: URL(string: viewModel.itemModel.userAvatar))
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: screenWidth)
@@ -171,16 +211,31 @@ struct UserDetailsView: View {
             .padding(.horizontal, 15)
             
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3), content: {
-                ForEach(0..<6, id: \.self) { indx in
-                    Image("jjp")
+                ForEach(viewModel.itemModel.partUserAlbums, id: \.self) { indx in
+                    WebImage(url: URL(string: indx))
+                        .placeholder(Image("图片缺失"))
                         .resizable()
                         .frame(width: 110 ,height: 121)
                         .clipped()
+                        .onTapGesture {
+                            clickURLAvatar = indx
+                            isImageShow = true
+                        }
+                    
                 }
             })
         }
         .background {
             Color("#FAFAFA")
+        }
+        .popup(isPresented: $isImageShow) {
+            ImageShowView(imgaeURL: $clickURLAvatar
+            )
+        } customize: {
+            $0
+                .isOpaque(true)
+//                .closeOnTap(true)
+                .backgroundColor(.black.opacity(0.4))
         }
     }
 }

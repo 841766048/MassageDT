@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogOffView: View {
     @Binding var isLogOff: Bool
-    let msg: String
+    @Binding var msg: String
     var body: some View {
         VStack(spacing: 0) {
             Image("warn")
@@ -28,6 +28,12 @@ struct LogOffView: View {
                 Button {
                     print("注销")
                     isLogOff = false
+                    NetWork.performAccountLogout { val in
+                        if val {
+                            SystemCaching.clearLogin()
+                            RootViewToggle.default.replaceRootView()
+                        }
+                    }
                 } label: {
                     Text("注销")
                         .padding(.horizontal, 48)
@@ -69,5 +75,5 @@ struct LogOffView: View {
 }
 
 #Preview {
-    LogOffView(isLogOff: .constant(false), msg: "")
+    LogOffView(isLogOff: .constant(false), msg: .constant(""))
 }

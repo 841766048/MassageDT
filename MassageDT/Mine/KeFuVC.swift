@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class KeFuVC: BaseViewController {
     lazy var titleLabel: UILabel = {
@@ -18,7 +19,7 @@ class KeFuVC: BaseViewController {
     
     lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.text = "01055409966 "
+        label.text = SystemCaching.kefu
         label.textColor = UIColor("#4E96EB")
         label.font = .systemFont(ofSize: 30, weight: .medium)
         return label
@@ -58,6 +59,8 @@ class KeFuVC: BaseViewController {
     }
     
     @objc func copyClick() {
-        
+        // 复制
+        UIPasteboard.general.string = SystemCaching.kefu
+        ProgressHUD.succeed("复制成功")
     }
 }

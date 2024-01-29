@@ -43,6 +43,22 @@
 		658AE9432B5FBC8700BB26CA /* UserAlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9422B5FBC8700BB26CA /* UserAlbumListView.swift */; };
 		658AE9452B5FC09600BB26CA /* UserAlbumListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9442B5FC09600BB26CA /* UserAlbumListVC.swift */; };
 		658AE9582B6208AB00BB26CA /* NetWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9572B6208AB00BB26CA /* NetWork.swift */; };
+		658AE95A2B620D4300BB26CA /* libTalkingDataSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE9592B620D4200BB26CA /* libTalkingDataSDK.a */; };
+		658AE95D2B620D7000BB26CA /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE95C2B620D7000BB26CA /* AdServices.framework */; };
+		658AE95F2B620D7900BB26CA /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE95E2B620D7900BB26CA /* iAd.framework */; };
+		658AE9632B620D8E00BB26CA /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE9622B620D8E00BB26CA /* AppTrackingTransparency.framework */; };
+		658AE9652B620D9500BB26CA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE9642B620D9500BB26CA /* AdSupport.framework */; };
+		658AE9672B620D9C00BB26CA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE9662B620D9C00BB26CA /* CoreTelephony.framework */; };
+		658AE9692B620DA400BB26CA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE9682B620DA400BB26CA /* Security.framework */; };
+		658AE96B2B620DAD00BB26CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE96A2B620DAD00BB26CA /* SystemConfiguration.framework */; };
+		658AE96D2B620DB900BB26CA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE96C2B620DB900BB26CA /* libc++.tbd */; };
+		658AE96F2B620DC300BB26CA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 658AE96E2B620DC300BB26CA /* libz.tbd */; };
+		658AE9732B622B0200BB26CA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9722B622B0200BB26CA /* LocationManager.swift */; };
+		658AE97B2B62BF5A00BB26CA /* NetWorkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE97A2B62BF5A00BB26CA /* NetWorkModel.swift */; };
+		658AE9842B63A04900BB26CA /* LeisureDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9832B63A04900BB26CA /* LeisureDetailsVC.swift */; };
+		658AE9862B63B21F00BB26CA /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9852B63B21F00BB26CA /* AudioManager.swift */; };
+		658AE9882B6531D300BB26CA /* FileAvatarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE9872B6531D300BB26CA /* FileAvatarManager.swift */; };
+		658AE98C2B677FBF00BB26CA /* ImageShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AE98B2B677FBF00BB26CA /* ImageShowView.swift */; };
 		65BFA7922B56723000F61805 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BFA7912B56723000F61805 /* AppDelegate.swift */; };
 		65BFA7942B56723000F61805 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BFA7932B56723000F61805 /* SceneDelegate.swift */; };
 		65BFA7962B56723000F61805 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BFA7952B56723000F61805 /* ViewController.swift */; };
@@ -89,6 +105,25 @@
 		658AE9422B5FBC8700BB26CA /* UserAlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlbumListView.swift; sourceTree = "<group>"; };
 		658AE9442B5FC09600BB26CA /* UserAlbumListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlbumListVC.swift; sourceTree = "<group>"; };
 		658AE9572B6208AB00BB26CA /* NetWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWork.swift; sourceTree = "<group>"; };
+		658AE9592B620D4200BB26CA /* libTalkingDataSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTalkingDataSDK.a; sourceTree = "<group>"; };
+		658AE95B2B620D4B00BB26CA /* TalkingDataSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingDataSDK.h; sourceTree = "<group>"; };
+		658AE95C2B620D7000BB26CA /* AdServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdServices.framework; path = System/Library/Frameworks/AdServices.framework; sourceTree = SDKROOT; };
+		658AE95E2B620D7900BB26CA /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		658AE9622B620D8E00BB26CA /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		658AE9642B620D9500BB26CA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		658AE9662B620D9C00BB26CA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		658AE9682B620DA400BB26CA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		658AE96A2B620DAD00BB26CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		658AE96C2B620DB900BB26CA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		658AE96E2B620DC300BB26CA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		658AE9702B620E7A00BB26CA /* MassageDTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MassageDTRelease.entitlements; sourceTree = "<group>"; };
+		658AE9722B622B0200BB26CA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		658AE9762B62B1EB00BB26CA /* MassageDT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MassageDT-Bridging-Header.h"; sourceTree = "<group>"; };
+		658AE97A2B62BF5A00BB26CA /* NetWorkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkModel.swift; sourceTree = "<group>"; };
+		658AE9832B63A04900BB26CA /* LeisureDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeisureDetailsVC.swift; sourceTree = "<group>"; };
+		658AE9852B63B21F00BB26CA /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		658AE9872B6531D300BB26CA /* FileAvatarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAvatarManager.swift; sourceTree = "<group>"; };
+		658AE98B2B677FBF00BB26CA /* ImageShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageShowView.swift; sourceTree = "<group>"; };
 		65BFA78E2B56723000F61805 /* MassageDT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MassageDT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BFA7912B56723000F61805 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65BFA7932B56723000F61805 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +140,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658AE96F2B620DC300BB26CA /* libz.tbd in Frameworks */,
+				658AE96D2B620DB900BB26CA /* libc++.tbd in Frameworks */,
+				658AE96B2B620DAD00BB26CA /* SystemConfiguration.framework in Frameworks */,
+				658AE9692B620DA400BB26CA /* Security.framework in Frameworks */,
+				658AE9672B620D9C00BB26CA /* CoreTelephony.framework in Frameworks */,
+				658AE9652B620D9500BB26CA /* AdSupport.framework in Frameworks */,
+				658AE9632B620D8E00BB26CA /* AppTrackingTransparency.framework in Frameworks */,
+				658AE95F2B620D7900BB26CA /* iAd.framework in Frameworks */,
+				658AE95D2B620D7000BB26CA /* AdServices.framework in Frameworks */,
 				316B094C5AB9FFB8AD65752C /* Pods_MassageDT.framework in Frameworks */,
+				658AE95A2B620D4300BB26CA /* libTalkingDataSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				652C7D762B5AD4A300F2793D /* LeisureVC.swift */,
+				658AE9832B63A04900BB26CA /* LeisureDetailsVC.swift */,
 			);
 			path = Leisure;
 			sourceTree = "<group>";
@@ -156,6 +202,7 @@
 				658AE9162B5C2CE100BB26CA /* FollowView.swift */,
 				658AE9362B5EBF6D00BB26CA /* UserDetailsView.swift */,
 				658AE9422B5FBC8700BB26CA /* UserAlbumListView.swift */,
+				658AE98B2B677FBF00BB26CA /* ImageShowView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -168,6 +215,9 @@
 				654BFF7B2B58268E003880E0 /* SystemTool.swift */,
 				658AE9122B5C27AB00BB26CA /* KeyWindowPopView.swift */,
 				658AE92E2B5EAFEA00BB26CA /* ImagePickerManager.swift */,
+				658AE9722B622B0200BB26CA /* LocationManager.swift */,
+				658AE9852B63B21F00BB26CA /* AudioManager.swift */,
+				658AE9872B6531D300BB26CA /* FileAvatarManager.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -244,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				658AE9572B6208AB00BB26CA /* NetWork.swift */,
+				658AE97A2B62BF5A00BB26CA /* NetWorkModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -269,6 +320,7 @@
 		65BFA7902B56723000F61805 /* MassageDT */ = {
 			isa = PBXGroup;
 			children = (
+				658AE9702B620E7A00BB26CA /* MassageDTRelease.entitlements */,
 				658AE9562B62088B00BB26CA /* Network */,
 				652C7D732B5AD45D00F2793D /* Mine */,
 				652C7D722B5AD43F00F2793D /* Leisure */,
@@ -287,6 +339,7 @@
 				65BFA79A2B56723200F61805 /* Assets.xcassets */,
 				65BFA79C2B56723200F61805 /* LaunchScreen.storyboard */,
 				65BFA79F2B56723200F61805 /* Info.plist */,
+				658AE9762B62B1EB00BB26CA /* MassageDT-Bridging-Header.h */,
 			);
 			path = MassageDT;
 			sourceTree = "<group>";
@@ -294,6 +347,17 @@
 		70AA590933B466C93F3C19A3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				658AE96E2B620DC300BB26CA /* libz.tbd */,
+				658AE96C2B620DB900BB26CA /* libc++.tbd */,
+				658AE96A2B620DAD00BB26CA /* SystemConfiguration.framework */,
+				658AE9682B620DA400BB26CA /* Security.framework */,
+				658AE9662B620D9C00BB26CA /* CoreTelephony.framework */,
+				658AE9642B620D9500BB26CA /* AdSupport.framework */,
+				658AE9622B620D8E00BB26CA /* AppTrackingTransparency.framework */,
+				658AE95E2B620D7900BB26CA /* iAd.framework */,
+				658AE95C2B620D7000BB26CA /* AdServices.framework */,
+				658AE95B2B620D4B00BB26CA /* TalkingDataSDK.h */,
+				658AE9592B620D4200BB26CA /* libTalkingDataSDK.a */,
 				594B108ABE2F68AF7AAE61E0 /* Pods_MassageDT.framework */,
 			);
 			name = Frameworks;
@@ -343,6 +407,7 @@
 				TargetAttributes = {
 					65BFA78D2B56723000F61805 = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1520;
 					};
 				};
 			};
@@ -457,12 +522,15 @@
 				65BFA7962B56723000F61805 /* ViewController.swift in Sources */,
 				654BFF862B58C7CD003880E0 /* BaseViewController.swift in Sources */,
 				658AE9112B5C210E00BB26CA /* MoreView.swift in Sources */,
+				658AE97B2B62BF5A00BB26CA /* NetWorkModel.swift in Sources */,
 				658AE9132B5C27AB00BB26CA /* KeyWindowPopView.swift in Sources */,
 				658AE9232B5DFA5300BB26CA /* SetView.swift in Sources */,
 				658AE91A2B5D502400BB26CA /* VideoView.swift in Sources */,
+				658AE9842B63A04900BB26CA /* LeisureDetailsVC.swift in Sources */,
 				652C7D702B5AD23300F2793D /* BaseTabBarControllerView.swift in Sources */,
 				658AE9452B5FC09600BB26CA /* UserAlbumListVC.swift in Sources */,
 				658AE91E2B5D7AC900BB26CA /* KeFuVC.swift in Sources */,
+				658AE9882B6531D300BB26CA /* FileAvatarManager.swift in Sources */,
 				658AE9172B5C2CE100BB26CA /* FollowView.swift in Sources */,
 				652C7D752B5AD49400F2793D /* EleganceVC.swift in Sources */,
 				658AE90B2B5C0D4A00BB26CA /* VoiceListView.swift in Sources */,
@@ -475,10 +543,13 @@
 				658AE92F2B5EAFEB00BB26CA /* ImagePickerManager.swift in Sources */,
 				658AE9202B5DFA3B00BB26CA /* SetVC.swift in Sources */,
 				652C7D772B5AD4A300F2793D /* LeisureVC.swift in Sources */,
+				658AE98C2B677FBF00BB26CA /* ImageShowView.swift in Sources */,
+				658AE9862B63B21F00BB26CA /* AudioManager.swift in Sources */,
 				65BFA7922B56723000F61805 /* AppDelegate.swift in Sources */,
 				658AE9432B5FBC8700BB26CA /* UserAlbumListView.swift in Sources */,
 				65BFA7942B56723000F61805 /* SceneDelegate.swift in Sources */,
 				655639B82B5AC75C00AB0DC2 /* ProtocolPolicyVC.swift in Sources */,
+				658AE9732B622B0200BB26CA /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,13 +700,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2FXAU7VW4X;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MassageDT/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "我们希望访问您的位置，尽可能向您推荐合适的信息";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "该应用程序需要您的同意才能访问相册以设置头像信息";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "我们希望尽可能的为您推荐更精准的信息和优质服务，需要获取您的设备信息。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -646,6 +720,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dt.qw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -654,6 +732,8 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MassageDT/MassageDT-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -665,13 +745,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MassageDT/MassageDTRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2FXAU7VW4X;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MassageDT/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "我们希望访问您的位置，尽可能向您推荐合适的信息";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "该应用程序需要您的同意才能访问相册以设置头像信息";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "我们希望尽可能的为您推荐更精准的信息和优质服务，需要获取您的设备信息。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -682,6 +766,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.CombineTest.MassageDT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -690,6 +778,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MassageDT/MassageDT-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

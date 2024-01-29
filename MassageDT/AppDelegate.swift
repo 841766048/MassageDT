@@ -11,6 +11,7 @@ import CL_ShanYanSDK
 import AdSupport
 import AppTrackingTransparency
 import IQKeyboardManagerSwift
+import Network
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,10 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        // 闪验初始化
-        initializationOneClickLogin()
-        initKeyboardManager()
-        initProgressHUD()
+        DispatchQueue.main.async {
+            self.initKeyboardManager()
+            self.initProgressHUD()
+            self.checkNetworkPermission {[weak self] hasPermission in
+                if hasPermission {
+                    debugPrint("有网络权限")
+                } else {
+                    debugPrint("网络权限被限制")
+                }
+                self?.initIDFA()
+            }
+        }
         return true
     }
 
@@ -56,11 +65,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initIDFA() {
-        ATTrackingManager.requestTrackingAuthorization { status in
+        ATTrackingManager.requestTrackingAuthorization {[weak self] status in
             if status == .authorized {
                 let idfa = ASIdentifierManager().advertisingIdentifier.uuidString
                 SystemCaching.idfa = idfa
             }
+            self?.initializationOneClickLogin()
+            self?.initPush()
+            self?.talkingDataSDK()
         }
     }
     
@@ -80,6 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initProgressHUD() {
         ProgressHUD.animationType = .circleArcDotSpin
         ProgressHUD.fontStatus = .systemFont(ofSize: 14)
+    }
+    
+    func talkingDataSDK() {
+        TalkingDataSDK.initSDK("4A62E26FFBD2441591FDE9FA39A18140", channelId: "AppStore", custom: "")
+        TalkingDataSDK.startA()
     }
 }
 
@@ -108,6 +125,48 @@ extension AppDelegate {
     
     func pushNotificationHandler(_ parameters: [AnyHashable : Any]) {
         
+    }
+    
+    func checkNetworkPermission(completion: @escaping (Bool) -> Void) {
+        let monitor = NWPathMonitor()
+
+            monitor.pathUpdateHandler = { path in
+                if path.status == .satisfied {
+                    // 有网络连接
+                    completion(true)
+                } else {
+                    // 无网络连接
+                    completion(false)
+                }
+            }
+
+            let queue = DispatchQueue(label: "NetworkMonitor")
+            monitor.start(queue: queue)
+    }
+}
+
+extension AppDelegate {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let urlType = "dtlvision.app.com://"
+        if let urlStr = url.absoluteString.removingPercentEncoding, urlStr.contains(urlType) {
+            let index = urlType.count-1
+            let startIndex = urlStr.index(urlStr.startIndex, offsetBy: urlType.count)
+            let json = urlStr.suffix(from: startIndex)
+            if let data = json.data(using: .utf8) {
+                do {
+                    // 将 Data 类型的 JSON 数据转换为字典
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        if let topVC = topViewController() {
+                            JSInteraction.jumpToVC(topVC, body: jsonObject)
+                        }
+                    }
+                } catch {
+                    print("JSON 解析错误: \(error)")
+                }
+            }
+        }
+        
+        return true
     }
 }
 

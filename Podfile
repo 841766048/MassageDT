@@ -33,7 +33,7 @@ target 'MassageDT' do
   pod 'LookinServer'
 
   pod 'SJVideoPlayer'
-  
+  pod 'SwiftSoup'
 end
 
 post_install do |installer|
