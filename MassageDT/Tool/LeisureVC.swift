@@ -44,7 +44,10 @@ class LeisureVC: BaseViewController {
     func layoutUIView() {
         self.view.addSubview(self.wkWebView)
         wkWebView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     override func initializeUIInfo() {
