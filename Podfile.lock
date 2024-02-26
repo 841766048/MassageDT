@@ -8,9 +8,6 @@ PODS:
   - JFPopup (1.5.4):
     - JRBaseKit (~> 1.1.1)
   - JRBaseKit (1.1.2)
-  - LookinServer (1.2.4):
-    - LookinServer/Core (= 1.2.4)
-  - LookinServer/Core (1.2.4)
   - Masonry (1.1.0)
   - ProgressHUD (14.1.0)
   - SDWebImage (5.18.5):
@@ -91,7 +88,6 @@ DEPENDENCIES:
   - HandyJSON
   - IQKeyboardManagerSwift
   - JFPopup (= 1.5.4)
-  - LookinServer
   - ProgressHUD
   - SDWebImage
   - SDWebImageSwiftUI
@@ -111,7 +107,6 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - JFPopup
     - JRBaseKit
-    - LookinServer
     - Masonry
     - ProgressHUD
     - SDWebImage
@@ -134,7 +129,6 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JFPopup: c3ada13bbda3cfe85bd71228e20a0b622eab72af
   JRBaseKit: 825cca458a73990f6019deaaaaff75840dea477f
-  LookinServer: 00c7588043ed8e7ab64ce55b9fb747e51371ad06
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ProgressHUD: c4a55f108815c46a6bf082407d2f806840b7a869
   SDWebImage: 7ac2b7ddc5e8484c79aa90fc4e30b149d6a2c88f
@@ -148,6 +142,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 5dcd64d1a993737f62ad1bb5321263fe0e35fec4
+PODFILE CHECKSUM: 0fe97f9663de881630c7f236e9c035f37b1c233b
 
 COCOAPODS: 1.13.0

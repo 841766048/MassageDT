@@ -30,7 +30,6 @@ target 'MassageDT' do
  pod 'ExytePopupView'
   pod 'SDWebImageSwiftUI'
   
-  pod 'LookinServer'
 
   pod 'SJVideoPlayer'
   pod 'SwiftSoup'

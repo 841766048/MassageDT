@@ -83,7 +83,12 @@ struct LocateTipsView: View {
         HStack {
             Text("开启定位享受语视按摩")
             Spacer()
-            Button(action: {}, label: {
+            Button(action: {
+                guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+                if UIApplication.shared.canOpenURL(settingsURL) {
+                    UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+                }
+            }, label: {
                 Text("开启")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(Color("#4E96EB"))

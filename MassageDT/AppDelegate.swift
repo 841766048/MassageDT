@@ -170,4 +170,6 @@ extension AppDelegate {
     }
 }
 
-let shanYanAppID: String = "0Sjtfn03"
+//let shanYanAppID: String = "0Sjtfn03"
+
+let shanYanAppID: String = "uMFVetnz"
