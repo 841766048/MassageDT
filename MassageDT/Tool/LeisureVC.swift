@@ -95,7 +95,6 @@ extension LeisureVC: WKScriptMessageHandler {
             JSInteraction.jumpToVC(self, body: body)
         }
     }
-    
 }
 
 extension LeisureVC: WKNavigationDelegate {

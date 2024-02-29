@@ -272,6 +272,7 @@ class LoginVC: BaseViewController {
             codeButton.isEnabled = true
             timer?.invalidate()
             timer = nil
+            codeButton.setTitle("获取验证码", for: .normal)
             return
         }
         

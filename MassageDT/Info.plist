@@ -18,6 +18,8 @@
 		<string>weixin</string>
 		<string>alipay</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

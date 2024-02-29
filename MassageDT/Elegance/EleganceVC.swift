@@ -13,13 +13,32 @@ class EleganceVC: BaseViewController {
     lazy var viewModel: EleganceViewModel = {
         var viewModel: EleganceViewModel = EleganceViewModel()
         viewModel.followClickBlock = {
-            self.navigationController?.pushViewController(FollowVC(), animated: true)
+            if SystemCaching.full.count > 0 {
+                KeyWindowPopView.showPop {
+                    BaseTabBarControllerView.tab.selectedIndex = 1
+                }
+            } else {
+                self.navigationController?.pushViewController(FollowVC(), animated: true)
+            }
         }
         viewModel.voiceClickBlock = { model in
-            self.navigationController?.pushViewController(UserDetailsVC(iteModel: model), animated: true)
+            if SystemCaching.full.count > 0 {
+                KeyWindowPopView.showPop {
+                    BaseTabBarControllerView.tab.selectedIndex = 1
+                }
+            } else {
+                self.navigationController?.pushViewController(UserDetailsVC(iteModel: model), animated: true)
+            }
         }
         viewModel.videoClickBlock = { model in
-            self.navigationController?.pushViewController(VideoViewVC(itemModel: model), animated: true)
+            if SystemCaching.full.count > 0 {
+                KeyWindowPopView.showPop {
+                    BaseTabBarControllerView.tab.selectedIndex = 1
+                }
+            } else {
+                self.navigationController?.pushViewController(VideoViewVC(itemModel: model), animated: true)
+            }
+            
         }
         return viewModel
     }()
@@ -32,6 +51,7 @@ class EleganceVC: BaseViewController {
                 self?.getDataSource()
             }
             .store(in: &disposeBag)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     override func initializeUIInfo() {
         super.initializeUIInfo()
@@ -40,18 +60,22 @@ class EleganceVC: BaseViewController {
         self.view.addSubview(eleganceView)
         self.viewModel.isLocate = LocationManager.shared.hasLocationAuthorization()
         getDataSource()
+        LocationManager.shared.startUpdatingLocation { locat in
+            if let location = locat {
+                SystemCaching.longitude = "\(location.coordinate.longitude)"
+                SystemCaching.latitude = "\(location.coordinate.latitude)"
+            }
+        }
     }
     
     func getDataSource() {
         NetWork.getEleganceData {[weak self] response in
             self?.viewModel.audio = response.audio
             self?.viewModel.video = response.video
-            if SystemCaching.full.count > 0 {
-                KeyWindowPopView.showPop {
-                    BaseTabBarControllerView.tab.selectedIndex = 1
-                }
-            }
+            
         }
     }
-
+    @objc func appWillEnterForeground() {
+        self.viewModel.isLocate = LocationManager.shared.hasLocationAuthorization()
+    }
 }

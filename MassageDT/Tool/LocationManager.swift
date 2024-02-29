@@ -36,11 +36,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func hasLocationAuthorization() -> Bool {
-        if #available(iOS 14.0, *) {
-            return locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways
-        } else {
-            return CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways
-        }
+        let isAuthor = CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways
+        return isAuthor
     }
 
     // MARK: - CLLocationManagerDelegate

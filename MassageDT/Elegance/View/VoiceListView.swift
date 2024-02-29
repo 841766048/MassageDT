@@ -66,7 +66,13 @@ struct EleganceItemView: View {
                 HStack {
                     Button {
                         if let url = URL(string: itemModel.audioSrc) {
-                            AudioManager.shared.playAudio(from: url)
+                            if SystemCaching.full.count > 0 {
+                                KeyWindowPopView.showPop {
+                                    BaseTabBarControllerView.tab.selectedIndex = 1
+                                }
+                            } else {
+                                AudioManager.shared.playAudio(from: url)
+                            }
                         }
                     } label: {
                         ZStack(alignment: .trailing) {

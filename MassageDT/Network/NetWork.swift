@@ -58,7 +58,8 @@ func getCommonParameter() -> [String: String] {
 }
 
 func POST(path: String, params: [String:String]) -> DataRequest {
-    AF
+    print("===>参数POST\(params)，path = \(path)")
+    return AF
         .request(baseURL + path,
                  method: .post,
                  parameters: params,
@@ -68,7 +69,8 @@ func POST(path: String, params: [String:String]) -> DataRequest {
 }
 
 func GET(path: String, params: [String:String], baseURL: String = baseURL) -> DataRequest {
-    AF
+    print("===>参数GET\(params)，path = \(path)")
+    return AF
         .request(baseURL + path,
                  method: .get,
                  parameters: params,
@@ -117,12 +119,18 @@ class NetWork {
         ProgressHUD.animate()
         POST(path: "sign/?a=index", params: parameters)
             .responseString { response in
-                ProgressHUD.dismiss()
                 switch response.result {
                 case let .success(res):
                     let model = BaseResponse<PerformCodeLoginModel>.deserialize(from: res)
-                    completionHandler(model?.data)
+                    if model?.code == 200 {
+                        ProgressHUD.dismiss()
+                        completionHandler(model?.data)
+                    } else {
+                        ProgressHUD.error(model?.msg ?? "")
+                    }
+                    
                 case let .failure(error):
+                    ProgressHUD.dismiss()
                     print("err = \(error)")
                 }
             }
