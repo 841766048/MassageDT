@@ -707,6 +707,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MassageDT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "按摩技师语音视频风采";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "我们希望访问您的位置，尽可能向您推荐合适的信息";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "该应用程序需要您的同意才能访问相册以设置头像信息";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "我们希望尽可能的为您推荐更精准的信息和优质服务，需要获取您的设备信息。";
@@ -715,6 +716,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -753,6 +755,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MassageDT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "按摩技师语音视频风采";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "我们希望访问您的位置，尽可能向您推荐合适的信息";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "该应用程序需要您的同意才能访问相册以设置头像信息";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "我们希望尽可能的为您推荐更精准的信息和优质服务，需要获取您的设备信息。";
@@ -761,6 +764,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

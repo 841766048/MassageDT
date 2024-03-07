@@ -95,13 +95,20 @@ class NetWork {
         ProgressHUD.animate()
         POST(path: "sign/?a=index", params: parameters)
             .responseString { response in
-                ProgressHUD.dismiss()
                 switch response.result {
                 case let .success(res):
                     let model = BaseResponse<Bool>.deserialize(from: res)
-                    completionHandler(model)
+                   
+                    if model?.code == 200 {
+                        ProgressHUD.dismiss()
+                        completionHandler(model)
+                    } else {
+                        ProgressHUD.error(model?.msg ?? "")
+                    }
                 case let .failure(error):
+                    ProgressHUD.dismiss()
                     print("err = \(error)")
+                    ProgressHUD.error(error.localizedDescription)
                 }
             }
     }

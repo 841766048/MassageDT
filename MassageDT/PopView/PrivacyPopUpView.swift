@@ -172,6 +172,8 @@ class PrivacyPopUpView: UIView {
     }
     
     @objc func agreedButtonClick() {
+        TalkingDataSDK.initSDK("4A62E26FFBD2441591FDE9FA39A18140", channelId: "AppStore", custom: "")
+        TalkingDataSDK.startA()
         SystemCaching.isFirstInstall = false
         RootViewToggle.default.replaceRootView()
     }

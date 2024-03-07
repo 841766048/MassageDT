@@ -30,7 +30,7 @@ class KeyWindowPopView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "当前服务正忙\n请稍后再试"
+        label.text = SystemCaching.full.count > 0 ? SystemCaching.full : "当前服务正忙\n请稍后再试"
         label.font = .systemFont(ofSize: 16)
         label.textColor = UIColor("#1E1E1E")
         return label
