@@ -66,14 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initIDFA() {
-        ATTrackingManager.requestTrackingAuthorization {[weak self] status in
-            if status == .authorized {
-                let idfa = ASIdentifierManager().advertisingIdentifier.uuidString
-                SystemCaching.idfa = idfa
+        self.initializationOneClickLogin()
+        self.initPush()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            ATTrackingManager.requestTrackingAuthorization {[weak self] status in
+                if status == .authorized {
+                    let idfa = ASIdentifierManager().advertisingIdentifier.uuidString
+                    SystemCaching.idfa = idfa
+                    self?.talkingDataSDK()
+                }
+                
             }
-            self?.initializationOneClickLogin()
-            self?.initPush()
-            self?.talkingDataSDK()
         }
     }
     
