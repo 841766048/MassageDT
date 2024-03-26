@@ -7,6 +7,8 @@
 
 import UIKit
 import SwiftUI
+import AdSupport
+import AppTrackingTransparency
 
 class EleganceVC: BaseViewController {
     
@@ -52,6 +54,12 @@ class EleganceVC: BaseViewController {
             }
             .store(in: &disposeBag)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        ATTrackingManager.requestTrackingAuthorization {[weak self] status in
+            if status == .authorized {
+                let idfa = ASIdentifierManager().advertisingIdentifier.uuidString
+                SystemCaching.idfa = idfa
+            }
+        }
     }
     override func initializeUIInfo() {
         super.initializeUIInfo()
@@ -62,6 +70,7 @@ class EleganceVC: BaseViewController {
         getDataSource()
         LocationManager.shared.startUpdatingLocation { locat in
             if let location = locat {
+                self.viewModel.isLocate = true
                 SystemCaching.longitude = "\(location.coordinate.longitude)"
                 SystemCaching.latitude = "\(location.coordinate.latitude)"
             }

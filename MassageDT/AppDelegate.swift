@@ -20,18 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        self.talkingDataSDK()
+//        self.talkingDataSDK()
         DispatchQueue.main.async {
             self.initKeyboardManager()
             self.initProgressHUD()
-            self.checkNetworkPermission {[weak self] hasPermission in
-                if hasPermission {
-                    debugPrint("有网络权限")
-                } else {
-                    debugPrint("网络权限被限制")
-                }
-                self?.initIDFA()
-            }
+            self.initializationOneClickLogin()
         }
         return true
     }
@@ -65,29 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func initIDFA() {
-        self.initializationOneClickLogin()
-        self.initPush()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            ATTrackingManager.requestTrackingAuthorization {[weak self] status in
-                if status == .authorized {
-                    let idfa = ASIdentifierManager().advertisingIdentifier.uuidString
-                    SystemCaching.idfa = idfa
-                    self?.talkingDataSDK()
-                }
-                
-            }
-        }
-    }
     
-    func initPush() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            guard granted else { return }
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
-            }
-        }
-    }
+    
+    
     
     func initKeyboardManager() {
         IQKeyboardManager.shared.enable = true
@@ -131,22 +104,7 @@ extension AppDelegate {
         
     }
     
-    func checkNetworkPermission(completion: @escaping (Bool) -> Void) {
-        let monitor = NWPathMonitor()
-
-            monitor.pathUpdateHandler = { path in
-                if path.status == .satisfied {
-                    // 有网络连接
-                    completion(true)
-                } else {
-                    // 无网络连接
-                    completion(false)
-                }
-            }
-
-            let queue = DispatchQueue(label: "NetworkMonitor")
-            monitor.start(queue: queue)
-    }
+    
 }
 
 extension AppDelegate {

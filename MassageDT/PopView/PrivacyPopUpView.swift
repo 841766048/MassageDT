@@ -12,6 +12,8 @@ import SnapKit
 import JFPopup
 import UIColor_Hex_Swift
 import Network
+import AdSupport
+import AppTrackingTransparency
 
 class PrivacyPopUpView: UIView {
     lazy var titleLabel: UILabel = {
@@ -177,6 +179,7 @@ class PrivacyPopUpView: UIView {
         SystemCaching.isFirstInstall = false
         RootViewToggle.default.replaceRootView()
     }
+    
 }
 
 
@@ -190,6 +193,13 @@ class FirstInstallVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initWithUI()
+//        self.checkNetworkPermission {[weak self] hasPermission in
+//            
+//        }
+        // 延迟执行代码块
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.initPush()
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -209,4 +219,28 @@ class FirstInstallVC: BaseViewController {
         }
 
     }
+    func checkNetworkPermission(completion: @escaping (Bool) -> Void) {
+        let monitor = NWPathMonitor()
+            monitor.pathUpdateHandler = { path in
+                if path.status == .satisfied {
+                    // 有网络连接
+                    completion(true)
+                } else {
+                    // 无网络连接
+                    completion(false)
+                }
+            }
+
+            let queue = DispatchQueue(label: "NetworkMonitor")
+            monitor.start(queue: queue)
+    }
+    func initPush() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            guard granted else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
 }

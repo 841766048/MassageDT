@@ -9,6 +9,8 @@ import UIKit
 import Combine
 import StoreKit
 import CoreTelephony
+import AdSupport
+import AppTrackingTransparency
 
 class RootViewToggle {
     static let `default` = RootViewToggle()
@@ -45,11 +47,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = BaseNavigationController(rootViewController: FirstInstallVC())
             window?.makeKeyAndVisible()
         } else {
+            talkingDataSDK()
             switchRootView()
         }
         
     }
-    
+    func talkingDataSDK() {
+        TalkingDataSDK.initSDK("4A62E26FFBD2441591FDE9FA39A18140", channelId: "AppStore", custom: "")
+        TalkingDataSDK.startA()
+    }
     func switchRootView() {
         if !SystemCaching.isLogin {
             let vc = UIViewController()
@@ -112,6 +118,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            ATTrackingManager.requestTrackingAuthorization {[weak self] status in
+                if status == .authorized {
+                    let idfa = ASIdentifierManager().advertisingIdentifier.uuidString
+                    SystemCaching.idfa = idfa
+                }
+            }
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
