@@ -23,10 +23,15 @@ class BaseTabBarControllerView: UITabBarController, UITabBarControllerDelegate {
         }
         let nav_leisureVC = setUpVC(title: "休闲", norImage: "xiuxian", selImage: "xiuxian_select", vc: feisureVC)
         nav_leisureVC.isLogin = true
+        
+        let message = MD_MessageVC()
+        let nav_message = setUpVC(title: "消息", norImage: "message", selImage: "message_sel", vc: message)
+        nav_leisureVC.isLogin = true
+        
         let nav_mineVC = setUpVC(title: "我的", norImage: "my", selImage: "my_select", vc: MineVC())
         nav_mineVC.isLogin = true
         
-        self.viewControllers = [nav_eleganceVC, nav_leisureVC, nav_mineVC]
+        self.viewControllers = [nav_eleganceVC, nav_leisureVC, nav_message, nav_mineVC]
         self.tabBar.backgroundColor = UIColor("#FFFFFF")
         self.tabBar.barTintColor = UIColor("#FFFFFF")
         self.tabBar.tintColor = UIColor("#4E96EB")

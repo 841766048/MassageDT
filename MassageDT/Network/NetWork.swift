@@ -164,6 +164,60 @@ class NetWork {
             }
     }
     
+    static func wxPayInfo(_ user_id: String, cate_id: String, price: String) {
+        var parameters: [String: String] = getCommonParameter()
+        parameters["user_id"] = user_id
+        parameters["cate_id"] = cate_id
+        parameters["price"] = "0.01"
+        parameters["type"] = "2"
+        parameters["key"] = SystemCaching.key
+        ProgressHUD.animate()
+        POST(path: "sign/?a=need", params: parameters)
+            .responseString { response in
+                
+                switch response.result {
+                case let .success(res):
+                    let model = BaseResponse<WxPayModel>.deserialize(from: res)
+                    if let wxpayModel = model?.data?.sign {
+                        ProgressHUD.dismiss()
+                        WxPayTool.instance.pay(wxpayModel)
+                    } else {
+                        ProgressHUD.error(model?.msg ?? "")
+                    }
+                case let .failure(error):
+                    ProgressHUD.error(error.localizedDescription)
+                }
+            }
+    }
+    
+    static func aliPayInfo(_ user_id: String, cate_id: String, price: String) {
+        var parameters: [String: String] = getCommonParameter()
+        parameters["user_id"] = user_id
+        parameters["cate_id"] = cate_id
+        parameters["price"] = price
+        parameters["type"] = "1"
+        parameters["key"] = SystemCaching.key
+        ProgressHUD.animate()
+        POST(path: "sign/?a=need", params: parameters)
+            .responseString { response in
+                switch response.result {
+                case let .success(res):
+                    let model = BaseResponse<AliPayModel>.deserialize(from: res)
+                    if let sign = model?.data?.sign, sign.count > 0 {
+                        ProgressHUD.dismiss()
+                        AlipaySDK.defaultService().payOrder(sign, fromScheme: "alipay") { result in
+                            print("RESULT：\(result)")
+                        }
+                    } else {
+                        ProgressHUD.error(model?.msg ?? "")
+                    }
+                case let .failure(error):
+                    print("err = \(error)")
+                    ProgressHUD.error(error.localizedDescription)
+                }
+            }
+    }
+    
     /// 获取配置信息
     /// - Parameter completionHandler: 回调
     static func retrievePermissionInfo(completionHandler: @escaping (RetrievePermissionInfoModel?) -> Void) {

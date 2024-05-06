@@ -38,6 +38,15 @@ struct RetrievePermissionInfoModel: HandyJSON {
     var kefu: String = ""
     var find_url: String = ""
     var quan: Int = 0
+    var my_account: String = ""
+    var my_need_url: String = ""
+    var chat_url: String = ""
+    var pconfs: [PconfsModel] = []
+}
+
+struct PconfsModel: HandyJSON {
+    var type: String = ""
+    var def: String = ""
 }
 
 struct PerformAccountLogoutTips: HandyJSON {
@@ -54,6 +63,7 @@ struct ElegantModel: HandyJSON {
     var audioSrc: String = ""
     var videoSrc: String = ""
     var type: String = ""
+    var services: [ElegantServerModel] = []
     var userAlbums: [String] {
         return self.Albums
     }
@@ -65,7 +75,45 @@ struct ElegantModel: HandyJSON {
     }
 }
 
+struct ElegantServerModel: HandyJSON {
+    var id: Int?
+    var serviceName: String?
+    var serviceIcon: String?
+    var servicePrice: Double?
+}
+
 struct StyleResponse: HandyJSON {
     var audio: [ElegantModel] = []
     var video: [ElegantModel] = []
+}
+
+
+
+struct WxPayModel: HandyJSON {
+    var order_sn: String = ""
+    var type: String = ""
+    var id: String = ""
+    var sign: WxPaySignModel?
+}
+
+
+struct WxPaySignModel: HandyJSON {
+    var appid: String = ""
+    var partnerid: String = ""
+    var prepayid: String = ""
+    var package: String = ""
+    var noncestr: String = ""
+    var timestamp: String = ""
+    var package_: String = ""
+    var link: String = ""
+    var signPay: String = ""
+    var orderId: String = ""
+}
+
+
+struct AliPayModel: HandyJSON {
+    var order_sn: String = ""
+    var type: String = ""
+    var id: String = ""
+    var sign: String = ""
 }

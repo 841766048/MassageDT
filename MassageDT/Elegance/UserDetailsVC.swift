@@ -14,6 +14,15 @@ class UserDetailsVC: BaseViewController {
         viewM.followListClick = {
             self.navigationController?.pushViewController(FollowVC(), animated: true)
         }
+        viewM.serverClick = {
+            if SystemCaching.isLogin {
+                self.navigationController?.pushViewController(ReservationServiceVC(iteModel: self.iteModel), animated: true)
+            } else {
+                topViewController()?.navigationController?.pushViewController(LoginVC(), animated: true)
+                
+            }
+            
+        }
         viewM.albumListClick = {
             self.navigationController?.pushViewController(UserAlbumListVC(iteModel: self.iteModel), animated: true)
         }

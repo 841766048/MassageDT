@@ -13,6 +13,7 @@ import ProgressHUD
 class UserDetailsViewModel: ObservableObject {
     var followListClick:(() -> ())?
     var albumListClick:(() -> ())?
+    var serverClick:(() -> ())?
     @Published var itemModel: ElegantModel = ElegantModel()
     
 }
@@ -26,6 +27,7 @@ struct UserDetailsTopView: View {
     
     @State var userFollow = false
     let followListClick:(() -> ())?
+   
     @AppStorage("followList") var followList = SystemCaching.followList
     var body: some View {
         HStack {
@@ -181,61 +183,108 @@ struct UserDetailsView: View {
     @ObservedObject var viewModel: UserDetailsViewModel
     @State var clickURLAvatar: String = ""
     @State var isImageShow = false
+    @State var serverClickIndex = -1
     var body: some View {
-        ScrollView {
-            UserDetailsTopView(itemModel: viewModel.itemModel, followListClick: {
-                viewModel.followListClick?()
-            })
-            WebImage(url: URL(string: viewModel.itemModel.userAvatar))
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: screenWidth)
-            
-            HStack(content: {
-                Text("TA的相册")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(Color("#1E1E1E"))
-                Spacer()
-                
-                Button(action: {
-                    viewModel.albumListClick?()
-                }, label: {
-                    Text("全部")
-                        .font(.system(size: 14, weight: .regular))
-                        .foregroundStyle(Color("#3C3C3C"))
-                    Image("right_icon")
-                        .resizable()
-                        .frame(width: 5.5, height: 10)
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                UserDetailsTopView(itemModel: viewModel.itemModel, followListClick: {
+                    viewModel.followListClick?()
                 })
-            })
-            .padding(.horizontal, 15)
-            
-            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3), content: {
-                ForEach(viewModel.itemModel.partUserAlbums, id: \.self) { indx in
-                    WebImage(url: URL(string: indx))
-                        .placeholder(Image("图片缺失"))
-                        .resizable()
-                        .frame(width: 110 ,height: 121)
-                        .clipped()
-                        .onTapGesture {
-                            clickURLAvatar = indx
-                            isImageShow = true
-                        }
+                WebImage(url: URL(string: viewModel.itemModel.userAvatar))
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: screenWidth)
+                
+                HStack(content: {
+                    Text("TA的相册")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color("#1E1E1E"))
+                    Spacer()
                     
-                }
-            })
-        }
-        .background {
-            Color("#FAFAFA")
-        }
-        .popup(isPresented: $isImageShow) {
-            ImageShowView(imgaeURL: $clickURLAvatar
-            )
-        } customize: {
-            $0
-                .isOpaque(true)
-//                .closeOnTap(true)
-                .backgroundColor(.black.opacity(0.4))
+                    Button(action: {
+                        viewModel.albumListClick?()
+                    }, label: {
+                        Text("全部")
+                            .font(.system(size: 14, weight: .regular))
+                            .foregroundStyle(Color("#3C3C3C"))
+                        Image("right_icon")
+                            .resizable()
+                            .frame(width: 5.5, height: 10)
+                    })
+                })
+                .padding(.horizontal, 15)
+                
+                LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3), content: {
+                    ForEach(viewModel.itemModel.partUserAlbums, id: \.self) { indx in
+                        WebImage(url: URL(string: indx))
+                            .placeholder(Image("图片缺失"))
+                            .resizable()
+                            .frame(width: 110 ,height: 121)
+                            .clipped()
+                            .onTapGesture {
+                                clickURLAvatar = indx
+                                isImageShow = true
+                            }
+                        
+                    }
+                })
+                
+                HStack(content: {
+                    Text("TA的服务")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color("#1E1E1E"))
+                    Spacer()
+                })
+                .padding(.horizontal, 15)
+                .padding(.top, 10)
+                
+                LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3), content: {
+                    ForEach(viewModel.itemModel.services.indices, id: \.self) { indx in
+                        VStack(content: {
+                            WebImage(url: URL(string: viewModel.itemModel.services[indx].serviceIcon ?? ""))
+                                .placeholder(Image("图片缺失"))
+                                .resizable()
+                                .frame(width: 110 ,height: 121)
+                                .cornerRadius(3)
+                                .clipped()
+                            
+                            Text(viewModel.itemModel.services[indx].serviceName ?? "")
+                                .font(.system(size: 13))
+                                .foregroundColor(Color(UIColor("#3C3C3C")))
+                                .padding(.top, 7)
+                                .padding(.bottom, 7)
+                            
+                        })
+                        .frame(width: 110)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 3)
+                                .stroke(serverClickIndex == indx ? Color.red:Color("#4E96EB"), lineWidth: 1.5)
+                        }
+                        .onTapGesture {
+                            serverClickIndex = indx
+                        }
+                    }
+                })
+                .padding(.bottom, 80)
+                
+            }
+            .background {
+                Color("#FAFAFA")
+            }
+            
+            Button {
+                viewModel.serverClick?()
+            } label: {
+                Text("预约服务")
+                    .padding(.horizontal, 98)
+                    .padding(.vertical, 14)
+                    .foregroundColor(.white)
+                    .background(
+                        LinearGradient(gradient: Gradient(colors: [Color("#77AEF7"), Color("#4D96EB")]), startPoint: .leading, endPoint: .trailing)
+                    )
+                    .cornerRadius(28)
+            }
+            .padding(.bottom, 29)
         }
     }
 }

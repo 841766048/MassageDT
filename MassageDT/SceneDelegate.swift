@@ -63,6 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = vc
             window?.makeKeyAndVisible()
             NetWork.retrievePermissionInfo { model in
+                glaModel = model
                 SystemCaching.kefu = model?.kefu ?? ""
                 if model?.prelogin == "1" {
                     DispatchQueue.main.async {
@@ -86,6 +87,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = vc
             window?.makeKeyAndVisible()
             NetWork.retrievePermissionInfo { model in
+                glaModel = model
                 SystemCaching.kefu = model?.kefu ?? ""
                 SystemCaching.find_url = model?.find_url ?? ""
                 BaseTabBarControllerView.tab.tabBar.isHidden = false
@@ -144,7 +146,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        print(#function)
+        _ = WxPayTool.instance.openUniversalLink(userActivity: userActivity)
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        URLContexts.forEach { (context: UIOpenURLContext) in
+            let url = context.url
+            if url.host == "safepay" {
+                // 支付宝支付
+                _ = AlipayTool.instance.openURL(url: url)
+            } else if url.host == "pay" {
+                // 微信支付
+                _ = WxPayTool.instance.openURL(url: url)
+            }
+        }
+    }
 
 }
 
+extension Notification.Name {
+    static let ALIPAYSUCCESSJUMP = Notification.Name("ALIPAYSUCCESSJUMP")
+    static let WXPaySUCCESSJUMP = Notification.Name("WXPaySUCCESSJUMP")
+}

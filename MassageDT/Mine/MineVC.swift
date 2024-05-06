@@ -22,12 +22,47 @@ class MineVC: BaseViewController {
         label.font = .systemFont(ofSize: 18, weight: .medium)
         return label
     }()
+    
+    lazy var orderView: FuncView = {
+        let view = FuncView()
+        view.iconImage.image = UIImage(named: "order")
+        view.titleLabel.text = "订单"
+        view.layer.cornerRadius = 8
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor("#4E96EB").cgColor
+        view.layer.masksToBounds = true
+        view.buttonBlock = {
+            let vc = MineWebVC()
+            vc.urlString = glaModel?.my_need_url
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        return view
+    }()
+    
+    lazy var walletView: FuncView = {
+        let view = FuncView()
+        view.iconImage.image = UIImage(named: "wallet")
+        view.titleLabel.text = "钱包"
+        view.layer.cornerRadius = 8
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor("#EBA34E").cgColor
+        view.layer.masksToBounds = true
+        view.buttonBlock = {
+            let vc = MineWebVC()
+            vc.urlString = glaModel?.my_account
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        return view
+    }()
+    
     lazy var tabeViewHeaderView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.frame = CGRect(x: 15, y: 0, width: screenWidth - 15*2, height: 84)
+        view.frame = CGRect(x: 15, y: 0, width: screenWidth - 15*2, height: 220)
         view.addSubview(headImageView)
         view.addSubview(nickName)
+        view.addSubview(orderView)
+        view.addSubview(walletView)
         headImageView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
@@ -36,6 +71,18 @@ class MineVC: BaseViewController {
         nickName.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(headImageView.snp.right).offset(15)
+        }
+        orderView.snp.makeConstraints { make in
+            make.left.equalTo(headImageView.snp.left)
+            make.top.equalTo(headImageView.snp.bottom).offset(18)
+            make.right.equalTo(view.snp.centerX).offset(-14)
+            make.height.equalTo(47)
+        }
+        walletView.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-20)
+            make.top.equalTo(headImageView.snp.bottom).offset(18)
+            make.left.equalTo(view.snp.centerX).offset(14)
+            make.height.equalTo(47)
         }
         return view
     }()
@@ -145,5 +192,58 @@ extension MineVC: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+    }
+}
+
+class FuncView: UIView {
+    lazy var iconImage: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .black
+        return label
+    }()
+    lazy var button: UIButton = {
+        let but = UIButton()
+        but.backgroundColor = .clear
+        but.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
+        return but
+    }()
+    var buttonBlock: (() -> Void)?
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        initWithUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    func initWithUI() {
+        self.addSubview(iconImage)
+        self.addSubview(titleLabel)
+        self.addSubview(button)
+        
+        iconImage.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(self.snp.centerX).offset(-7)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalTo(self.snp.centerX).offset(7)
+            make.centerY.equalToSuperview()
+        }
+        
+        button.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    @objc func buttonClick() {
+        self.buttonBlock?()
     }
 }

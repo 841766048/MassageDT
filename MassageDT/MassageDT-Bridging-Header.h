@@ -3,3 +3,5 @@
 //
 
 #import "TalkingDataSDK.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import <WXApi.h>

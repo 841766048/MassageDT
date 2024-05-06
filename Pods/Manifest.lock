@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.8.1)
+  - AlipaySDK-iOS (15.8.16)
   - AutoInch (2.4.1)
   - CL_ShanYanSDK (2.3.6.5)
   - ExytePopupView (2.8.3)
@@ -77,11 +78,13 @@ PODS:
   - SnapKit (5.6.0)
   - SwiftSoup (2.6.1)
   - UIColor_Hex_Swift (5.1.9)
+  - WechatOpenSDK-XCFramework (2.0.2)
   - YYModel (1.0.4)
   - YYText (1.0.7)
 
 DEPENDENCIES:
   - Alamofire
+  - AlipaySDK-iOS
   - AutoInch
   - CL_ShanYanSDK
   - ExytePopupView
@@ -95,11 +98,13 @@ DEPENDENCIES:
   - SnapKit
   - SwiftSoup
   - UIColor_Hex_Swift
+  - WechatOpenSDK-XCFramework
   - YYText
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - AlipaySDK-iOS
     - AutoInch
     - CL_ShanYanSDK
     - ExytePopupView
@@ -117,11 +122,13 @@ SPEC REPOS:
     - SnapKit
     - SwiftSoup
     - UIColor_Hex_Swift
+    - WechatOpenSDK-XCFramework
     - YYModel
     - YYText
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  AlipaySDK-iOS: 5e6011fbd546e7db6b43c1f527d164ee63f3d7cb
   AutoInch: 4d69de92c4c54b71352d67d07dcb6d9e5d1e546a
   CL_ShanYanSDK: e33ae72e33ee2131cda4ec24305e30c45a57ce48
   ExytePopupView: f71a9ede978b4e80fc477553aebac4777819f49a
@@ -139,9 +146,10 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftSoup: 5dd2c1b06afc964f30d99894af6ede22ede627aa
   UIColor_Hex_Swift: 20cb4e8d51b63e168a9da6933bc5d39cd8fb4ab5
+  WechatOpenSDK-XCFramework: acdeeda129efbef9532bca8a10c24e1b4b8c7d69
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 0fe97f9663de881630c7f236e9c035f37b1c233b
+PODFILE CHECKSUM: db14c50736494d56573e072aecdddc6220652cde
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2

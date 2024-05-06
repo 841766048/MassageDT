@@ -87,3 +87,5 @@ struct SystemCaching {
     }
     
 }
+
+var glaModel: RetrievePermissionInfoModel? = nil

@@ -75,6 +75,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         TalkingDataSDK.initSDK("4A62E26FFBD2441591FDE9FA39A18140", channelId: "AppStore", custom: "")
         TalkingDataSDK.startA()
     }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        //        return WXApi.handleOpen(url, delegate: self)
+        if url.host == "safepay" {
+            // 支付宝支付
+            return AlipayTool.instance.openURL(url: url)
+        } else if url.host == "pay" {
+            // 微信支付
+            return WxPayTool.instance.openURL(url: url)
+        }
+        return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([any UIUserActivityRestoring]?) -> Void) -> Bool {
+        return WxPayTool
+            .instance.openUniversalLink(userActivity: userActivity)
+    }
 }
 
 extension AppDelegate {

@@ -27,12 +27,15 @@ target 'MassageDT' do
   # 三方验证库
   pod 'CL_ShanYanSDK' # 手机号验证（闪验）
  
- pod 'ExytePopupView'
+  pod 'ExytePopupView'
   pod 'SDWebImageSwiftUI'
   
 
   pod 'SJVideoPlayer'
   pod 'SwiftSoup'
+  
+  pod 'WechatOpenSDK-XCFramework'
+  pod 'AlipaySDK-iOS'
 end
 
 post_install do |installer|

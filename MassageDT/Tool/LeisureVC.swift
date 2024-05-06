@@ -21,8 +21,9 @@ class LeisureVC: BaseViewController {
     }()
     var isHidenBack = true {
         didSet {
-            self.backButton.isHidden = isHidenBack
-            BaseTabBarControllerView.tab.tabBar.isHidden = !isHidenBack
+            self.backButton.isHidden = false
+//            self.backButton.isHidden = isHidenBack
+//            BaseTabBarControllerView.tab.tabBar.isHidden = !isHidenBack
         }
     }
     init() {
@@ -53,12 +54,16 @@ class LeisureVC: BaseViewController {
     override func initializeUIInfo() {
         super.initializeUIInfo()
         self.setBackButton()
-        self.backButton.isHidden = true
+        self.backButton.isHidden = false
     }
     func loadURL() {
         var parameters_dict = NetWorkConfig().toJSON() as? [String: String] ?? [:]
         parameters_dict["key"] = SystemCaching.key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         parameters_dict["kefu"] = SystemCaching.kefu.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        parameters_dict["5nun"] = TalkingDataSDK.getDeviceId()
+        parameters_dict["1dg"] = SystemCaching.longitude
+        parameters_dict["1s5"] = SystemCaching.latitude
         var parameters: [String] = []
         for (key, value) in parameters_dict {
             let stringValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -138,6 +143,15 @@ struct JSInteraction {
             } else if type == "15" {
                 if let url = body?["url"] as? String {
                     VC.navigationController?.pushViewController(LeisureDetailsVC(url: url), animated: true)
+                }
+            } else if type == "pay" {
+                if let data = body?["sign"] as? [String: Any] {
+                    if let signData = data["data"] as? [String: Any], let signDict = signData["sign"] as? [String: Any]  {
+                        if let sign = WxPaySignModel.deserialize(from: signDict) {
+                            WxPayTool.instance.pay(sign)
+                        }
+                    }
+                    
                 }
             }
         }
